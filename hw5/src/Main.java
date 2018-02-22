@@ -36,6 +36,7 @@ public class Main {
                 System.out.println(" - Массив после сортировки QuickSort");
                 break;
             case 2:
+                MazeRunner.run();
                 System.out.println("Area under construction :(");
                 break;
             default:
