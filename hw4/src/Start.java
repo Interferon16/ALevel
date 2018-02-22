@@ -59,7 +59,7 @@ public class Start {
                 arrayPrinter(randomarray);
                 break;
             case 6:
-                System.out.println("Сгенерированный массив \n");
+                System.out.println("Сгенерированный массив");
                 int randomarray2[][]=ArrayGenerate.generateRandomArray(7,4,-5,5);
                 arrayPrinter(randomarray2);
                 int randomarrayresult[]=arraySumming.maxCompositionLine(randomarray2);
