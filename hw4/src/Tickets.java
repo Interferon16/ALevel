@@ -1,19 +1,28 @@
-public class tickets {
-    private static int LTCounts=0,a,b;
+/*
+В городе N проезд в трамвае осуществляется по бумажным отрывным билетам.
+Каждую неделю трамвайное депо заказывает в местной типографии рулон билетов с номерами от 000001 до 999999.
+«Счастливым» считается билетик у которого сумма первых трёх цифр номера равна сумме последних трёх цифр, как,
+например, в билетах с номерами 003102 или 567576. Трамвайное депо решило подарить сувенир обладателю каждого
+счастливого билета и теперь раздумывает, как много сувениров потребуется. С помощью программы подсчитайте сколько
+счастливых билетов в одном рулоне?
+ */
 
-    public static int LuckyTicketsCount(int x){
-        for(int i=0;i<=999;i++){
-            for(int j=0;j<=999;j++){
-                int a=i/100;
-                int b=(i/10)%10;
-                int c=i%10;
-                int d=j/100;
-                int e=(j/10)%10;
-                int f=j%10;
-                //a=summing.summline(i);
-                //b=summing.summline(j);
-                //if(a==b){
-                if((a+b+c)==(d+e+f)){
+public class Tickets {
+
+    public static int LuckyTicketsCount(int x) {
+        int LTCounts = 0, a, b;
+        if (x / 1000 > 999) {
+            System.out.println("Число слишком велико");
+            System.exit(0);
+        }
+        if (x % 1000 == 0) {
+            x -= 1;
+        }
+        for (int i = 0; i <= x / 1000; i++) {
+            for (int j = 0; j <= x % 1000; j++) {
+                a = Summing.summline(i);
+                b = Summing.summline(j);
+                if (a == b) {
                     LTCounts++;
                 }
             }
