@@ -14,6 +14,8 @@ public class Maze {
         checkExits(tempArray);
         int backroad[][] = ShortestRoad(tempArray, smallest_exit_i, smallest_exit_j);
         System.out.println("");
+        System.out.println("Начальная точка - "+sp_i+"."+sp_j);
+        System.out.println("");
         System.out.print("Путь от выхода к начальной точке");
         for (int i = 0; i < counter; i++) {
             System.out.print(" -> " + backroad[i][0] + "." + backroad[i][1]);
@@ -61,6 +63,7 @@ public class Maze {
                 }
             }
         }
+        /*
         for (int i = 0; i < m.length; i++) {
             System.out.println("");
             for (int j = 0; j < m[i].length; j++) {
@@ -71,6 +74,7 @@ public class Maze {
                 }
             }
         }
+        */
         System.out.println("");
         for (int i = 0; i < MAZE.length; i++) {
             System.out.println("");
@@ -82,6 +86,7 @@ public class Maze {
                 }
             }
         }
+        System.out.println("");
     }
 
     private static int[][] cloneArray(int[][] m) {
