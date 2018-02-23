@@ -63,7 +63,7 @@ public class Maze {
                 }
             }
         }
-        /*
+        /* Прверка логики волнообразного заолненияя массива
         for (int i = 0; i < m.length; i++) {
             System.out.println("");
             for (int j = 0; j < m[i].length; j++) {
