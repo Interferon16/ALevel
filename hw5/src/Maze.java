@@ -1,6 +1,5 @@
 import java.util.Random;
 
-
 public class Maze {
 
     private static int smallest = Integer.MAX_VALUE, smallest_exit_i = 0, smallest_exit_j = 0, wave, counter;
@@ -14,7 +13,7 @@ public class Maze {
         checkExits(tempArray);
         int backroad[][] = ShortestRoad(tempArray, smallest_exit_i, smallest_exit_j);
         System.out.println("");
-        System.out.println("Начальная точка - "+sp_i+"."+sp_j);
+        System.out.println("Начальная точка - " + sp_i + "." + sp_j);
         System.out.println("");
         System.out.print("Путь от выхода к начальной точке");
         for (int i = 0; i < counter; i++) {
@@ -25,14 +24,14 @@ public class Maze {
 
     private static int[][] MAZE = {
             {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-            {1, 1, 0, 0, 0, 1, 1, 0, 0, 1},
+            {1, 0, 0, 0, 0, 1, 1, 0, 0, 0},
             {1, 0, 0, 1, 0, 0, 0, 0, 1, 1},
             {1, 1, 1, 1, 0, 1, 1, 1, 1, 1},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
             {1, 1, 0, 1, 0, 1, 0, 1, 1, 1},
             {1, 1, 0, 1, 0, 1, 0, 1, 0, 1},
             {1, 0, 0, 1, 0, 1, 0, 0, 0, 1},
-            {1, 1, 0, 1, 0, 0, 0, 1, 0, 1},
+            {0, 0, 0, 0, 0, 0, 0, 1, 0, 1},
             {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
     };
 
@@ -63,7 +62,8 @@ public class Maze {
                 }
             }
         }
-        /* Прверка логики волнообразного заолненияя массива
+        //Прверка логики волнообразного заолненияя массива
+
         for (int i = 0; i < m.length; i++) {
             System.out.println("");
             for (int j = 0; j < m[i].length; j++) {
@@ -74,7 +74,7 @@ public class Maze {
                 }
             }
         }
-        */
+
         System.out.println("");
         for (int i = 0; i < MAZE.length; i++) {
             System.out.println("");
@@ -112,12 +112,6 @@ public class Maze {
             }
         }
         return startpoint;
-    }
-
-    private static void swap(int a, int b) {
-        int temp = a;
-        a = b;
-        b = temp;
     }
 
     private static void checkExits(int[][] m) {
@@ -171,8 +165,8 @@ public class Maze {
 
     private static int[][] ShortestRoad(int[][] m, int i, int j) {
         int[][] backroad = new int[m.length * m[0].length][m.length * m[0].length];
-        int count = 0, cor = 0, wave = 2;
-        while (count < 1) {
+        int cor = 0, wave = 2;
+        while (true) {
             smallest--;
             if (i + 1 < m.length && m[i + 1][j] == smallest) {
                 counter++;
@@ -181,7 +175,7 @@ public class Maze {
                 cor++;
                 i++;
                 if (m[i][j] == wave) {
-                    count++;
+                    break;
                 }
             }
             if (i - 1 >= 0 && m[i - 1][j] == smallest) {
@@ -191,7 +185,7 @@ public class Maze {
                 cor++;
                 i--;
                 if (m[i][j] == wave) {
-                    count++;
+                    break;
                 }
             }
             if (j + 1 < m[i].length && m[i][j + 1] == smallest) {
@@ -201,7 +195,7 @@ public class Maze {
                 cor++;
                 j++;
                 if (m[i][j] == wave) {
-                    count++;
+                    break;
                 }
             }
             if (j - 1 >= 0 && m[i][j - 1] == smallest) {
@@ -211,7 +205,7 @@ public class Maze {
                 cor++;
                 j--;
                 if (m[i][j] == wave) {
-                    count++;
+                    break;
                 }
             }
 
