@@ -48,11 +48,15 @@ public class StandartBuyer implements Buyer {
             if(bag.getNotUsedSize()==0){
                 break;
             }
-            if (firstshelf.checkAvailable()) {
-                bag.add(firstshelf.get());
-            }
-            if (secondshelf.checkAvailable()) {
-                bag.add(secondshelf.get());
+            switch(rnd.nextInt(2)) {
+                case 0:
+                    if(firstshelf.checkAvailable()) {
+                    bag.add(firstshelf.get());
+                }break;
+                case 1:
+                    if(secondshelf.checkAvailable()) {
+                    bag.add(secondshelf.get());
+                }break;
             }
         }return true;
     }
