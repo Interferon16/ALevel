@@ -49,11 +49,9 @@ public class StandartBuyer implements Buyer {
                 break;
             }
             if (firstshelf.checkAvailable()) {
-                firstshelf.get();
                 bag.add(firstshelf.get());
             }
             if (secondshelf.checkAvailable()) {
-                secondshelf.get();
                 bag.add(secondshelf.get());
             }
         }return true;

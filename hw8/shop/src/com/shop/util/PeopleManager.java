@@ -15,7 +15,7 @@ public class PeopleManager {
 
     public double nextMoney(){
         Random rnd = new Random();
-        double money =(double) rnd.nextInt(1001)/10;
+        double money =(double) rnd.nextInt(2001)/10;
         return money;
     }
 

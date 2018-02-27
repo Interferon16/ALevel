@@ -58,6 +58,7 @@ public class AppleShelf implements Shelf {
         for (int i = 0; i < count; i++) {
             System.out.println(shelf[i]);
         }
+        //System.out.println("На полке яблок" + count);
     }
 
     public int getFreeSpace() {

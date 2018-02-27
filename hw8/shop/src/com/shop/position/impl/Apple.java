@@ -9,8 +9,4 @@ public class Apple extends AbstractPosition {
     public Apple(double price, String name) {
         super(price, name);
     }
-
-    public String toString(){
-        return name+" - " +price;
-    }
 }

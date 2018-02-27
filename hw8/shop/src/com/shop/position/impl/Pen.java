@@ -9,8 +9,4 @@ public class Pen extends AbstractPosition {
     public Pen(double price, String name) {
         super(price, name);
     }
-
-    public String toString(){
-        return name+" - " +price;
-    }
 }

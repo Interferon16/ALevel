@@ -59,6 +59,7 @@ public class PenShelf implements Shelf {
         for (int i = 0; i < count; i++) {
             System.out.println(shelf[i]);
         }
+        //System.out.println("На полке карандашей" + count);
     }
 
     public int getFreeSpace() {
