@@ -17,7 +17,7 @@ public class ShopManager {
         while (bag.haveNext()){
             System.out.println("PICK!!");
             sum +=bag.next().getPrice();
-            //Thread.sleep(100);
+            Thread.sleep(10);
         }
         System.out.println("Ваша сумма составляет " + sum);
         return sum;
@@ -40,7 +40,7 @@ public class ShopManager {
             Position a=bag.next();
             System.out.println("PICK!! - "+a.getName()+" "+a.getPrice());
             sum +=a.getPrice();
-            Thread.sleep(100);
+            Thread.sleep(10);
             count++;
         }
         bag.sortByPrice();

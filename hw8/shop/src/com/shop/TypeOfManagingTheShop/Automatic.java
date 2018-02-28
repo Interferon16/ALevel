@@ -22,17 +22,15 @@ public class Automatic {
     private static Shelf penshelf=new PenShelf();
 
     public static void start() {
-        Random rnd = new Random();
-        for (int i = 0; i < 90; i++) {
-            double price = (double)(rnd.nextInt(100)+10) / 10;
-            appleshelf.put(new Apple(price, "Apple"));
-            price = (double)(rnd.nextInt(200)+20) / 10;
-            penshelf.put(new Pen(price, "Pen"));
-        }
+        zavozProduktov(appleshelf, penshelf);
         Scanner scanner = new Scanner(System.in);
         System.out.println("Введите количество покупателей");
         int cycle = scanner.nextInt();
         for (int i = 0; i < cycle; i++) {
+            if(!penshelf.checkAvailable()||!appleshelf.checkAvailable()){
+                zavozProduktov(appleshelf, penshelf);
+                System.out.println("################ Завоз продуктов #################");
+            }
             doPokupki();
         }
     }
@@ -57,6 +55,16 @@ public class Automatic {
             System.out.println("У покупателя не хватило денег, товар возвращен на полки");
             System.out.println("Финальный статус покупателя - "+pokupatel.seeBuyer()+"\n");
             refund(pokupatel, appleshelf, penshelf);
+        }
+    }
+
+    private static void zavozProduktov(Shelf appleshelf, Shelf penshelf){
+        Random rnd = new Random();
+        for (int i = 0; i < 90; i++) {
+            double price = (double)(rnd.nextInt(100)+10) / 10;
+            appleshelf.put(new Apple(price, "Apple"));
+            price = (double)(rnd.nextInt(200)+20) / 10;
+            penshelf.put(new Pen(price, "Pen"));
         }
     }
 
