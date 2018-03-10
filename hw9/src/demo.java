@@ -7,13 +7,17 @@ public class demo {
         try {
             reader = new BufferedReader(new FileReader(path));
         } catch (FileNotFoundException e) {
-            System.out.println("File not found");;
+            System.out.println("Файл не найден");
         }finally {
             try {
-                reader.close();
+                if(reader!=null) {
+                    reader.close();
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            System.out.println("Поток закрыт");
+            System.exit(0);
         }
         StringBuilder stringBuilder = new StringBuilder();
 
@@ -35,7 +39,7 @@ public class demo {
     }
 
     public static void main(String[] args) {
-        System.out.println(read("C:\\test.txt"));
+        System.out.println(read("C:\\test1.txt"));
     }
 }
 
