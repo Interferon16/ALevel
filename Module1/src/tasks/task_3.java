@@ -1,6 +1,6 @@
 package tasks;
 
-public class task_3 {
+public class Task_3 {
 
     private static int[]temp_array;
     private static int checker;

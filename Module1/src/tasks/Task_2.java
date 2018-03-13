@@ -3,7 +3,7 @@ package tasks;
 import java.util.Random;
 import java.util.Scanner;
 
-public class Numbers {
+public class Task_2 {
 
     public static void run() {
         System.out.println("Введите максимальное целое число для угадываний");
