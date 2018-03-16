@@ -14,16 +14,16 @@ public class FileTree {
         this(path, path);
     }
 
-    private File logfile;
+    private File listOfFiles;
     private StringBuffer listOfFilesBuffer = new StringBuffer();
 
-    private void createListOfFiles(String logFileDir) throws IOException {
-        String listOfFilesPath = logFileDir + "\\ListOfFiles.txt";
-        logfile = new File(listOfFilesPath);
-        if (logfile.exists()) {
-            logfile.delete();
+    private void createListOfFiles(String listOfFilesDir) throws IOException {
+        String listOfFilesPath = listOfFilesDir + "\\ListOfFiles.txt";
+        listOfFiles = new File(listOfFilesPath);
+        if (listOfFiles.exists()) {
+            listOfFiles.delete();
         } else {
-            logfile.createNewFile();
+            listOfFiles.createNewFile();
         }
     }
 
@@ -58,7 +58,7 @@ public class FileTree {
     private void writeToFile(StringBuffer listOfFilesBuffer) throws IOException {
         FileWriter writer = null;
         try {
-            writer = new FileWriter(logfile, true);
+            writer = new FileWriter(listOfFiles, true);
         } catch (IOException e) {
             throw new IOException("Не могу записать в лог файл");
         }
