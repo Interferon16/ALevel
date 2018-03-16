@@ -4,66 +4,66 @@ import java.io.*;
 import java.util.Date;
 
 public class FileTree {
-    public FileTree(String path, String listOfFiles) throws IOException {
-        createListOfFiles(listOfFiles);
+    public FileTree(String path, String list_of_files) throws IOException {
+        createListOfFiles(list_of_files);
         browseFileTreeModifiead(path, -1);
-        writeToFile(listOfFilesBuffer);
+        writeToFile(list_of_files_buffer);
     }
 
     public FileTree(String path) throws IOException {
         this(path, path);
     }
 
-    private File listOfFiles;
-    private StringBuffer listOfFilesBuffer = new StringBuffer();
+    private File list_of_files;
+    private StringBuffer list_of_files_buffer = new StringBuffer();
 
-    private void createListOfFiles(String listOfFilesDir) throws IOException {
-        String listOfFilesPath = listOfFilesDir + "\\ListOfFiles.txt";
-        listOfFiles = new File(listOfFilesPath);
-        if (listOfFiles.exists()) {
-            listOfFiles.delete();
+    private void createListOfFiles(String list_of_files_dir) throws IOException {
+        String list_of_files_path = list_of_files_dir + "\\ListOfFiles.txt";
+        list_of_files = new File(list_of_files_path);
+        if (list_of_files.exists()) {
+            list_of_files.delete();
         } else {
-            listOfFiles.createNewFile();
+            list_of_files.createNewFile();
         }
     }
 
-    private void browseFileTreeModifiead(String path, int whiteSpaceCount) throws IOException {
-        whiteSpaceCount++;
-        StringBuilder whiteSpace = new StringBuilder("");
-        for (int i = 0; i < whiteSpaceCount; i++) {
-            whiteSpace.append("  ");
+    private void browseFileTreeModifiead(String path, int white_space_count) throws IOException {
+        white_space_count++;
+        StringBuilder white_space = new StringBuilder("");
+        for (int i = 0; i < white_space_count; i++) {
+            white_space.append("  ");
         }
         File file = new File(path);
         File[] a = file.listFiles();
         String prefix = "[]";
         if (a != null) {
             for (File s : a) {
-                Date last_Modified = new Date(s.lastModified());
+                Date last_modified = new Date(s.lastModified());
                 if (s.isFile()) {
                     prefix = "[FILE] ";
                 }
                 if (s.isDirectory()) {
                     prefix = "[DIR] ";
                 }
-                listOfFilesBuffer.append("\r\n" + whiteSpace + prefix + "" + s.getName() + " :    " + last_Modified);
-                browseFileTreeModifiead(s.getPath(), whiteSpaceCount);
-                if (listOfFilesBuffer.length() > 40000) {
-                    writeToFile(listOfFilesBuffer);
-                    listOfFilesBuffer.delete(0, listOfFilesBuffer.length());
+                list_of_files_buffer.append("\r\n" + white_space + prefix + "" + s.getName() + " :    " + last_modified);
+                browseFileTreeModifiead(s.getPath(), white_space_count);
+                if (list_of_files_buffer.length() > 40000) {
+                    writeToFile(list_of_files_buffer);
+                    list_of_files_buffer.delete(0, list_of_files_buffer.length());
                 }
             }
         }
     }
 
-    private void writeToFile(StringBuffer listOfFilesBuffer) throws IOException {
+    private void writeToFile(StringBuffer list_of_files_buffer) throws IOException {
         FileWriter writer = null;
         try {
-            writer = new FileWriter(listOfFiles, true);
+            writer = new FileWriter(list_of_files, true);
         } catch (IOException e) {
             throw new IOException("Не могу записать в лог файл");
         }
         try {
-            writer.write(listOfFilesBuffer.toString());
+            writer.write(list_of_files_buffer.toString());
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
