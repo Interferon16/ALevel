@@ -46,11 +46,12 @@ public class FileTree {
                     prefix = "[DIR] ";
                 }
                 list_of_files_buffer.append("\r\n" + white_space + prefix + "" + s.getName() + " :    " + last_modified);
-                browseFileTreeModifiead(s.getPath(), white_space_count);
-                if (list_of_files_buffer.length() > 40000) {
+                if (list_of_files_buffer.length() > 160000) {
                     writeToFile(list_of_files_buffer);
                     list_of_files_buffer.delete(0, list_of_files_buffer.length());
                 }
+                browseFileTreeModifiead(s.getPath(), white_space_count);
+
             }
         }
     }
