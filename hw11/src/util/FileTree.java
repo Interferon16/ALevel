@@ -29,7 +29,7 @@ public class FileTree {
 
     private void browseFileTreeModifiead(String path, int white_space_count) throws IOException {
         white_space_count++;
-        StringBuilder white_space = new StringBuilder("");
+        StringBuffer white_space = new StringBuffer("");
         for (int i = 0; i < white_space_count; i++) {
             white_space.append("  ");
         }
