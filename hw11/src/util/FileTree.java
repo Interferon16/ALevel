@@ -70,6 +70,7 @@ public class FileTree {
         } finally {
             try {
                 writer.close();
+                writer.flush();
             } catch (IOException e) {
                 e.printStackTrace();
             }
