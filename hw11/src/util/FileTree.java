@@ -69,8 +69,8 @@ public class FileTree {
             e.printStackTrace();
         } finally {
             try {
-                writer.close();
                 writer.flush();
+                writer.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
