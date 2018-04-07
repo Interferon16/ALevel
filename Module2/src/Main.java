@@ -1,3 +1,4 @@
+import task1.TestNewArrayList;
 import task2.PingPong;
 import task3.DBGenerate;
 import task3.Workbench;
@@ -10,6 +11,8 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         int task_num=scanner.nextInt();
         switch(task_num){
+            case 1:
+                TestNewArrayList.run();break;
             case 2:
                 PingPong.run();break;
             case 3:
