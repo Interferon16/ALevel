@@ -7,111 +7,68 @@ USE social_network;
 -- Creating tables
 
 
-DROP TABLE IF EXISTS 	person,
+DROP TABLE IF EXISTS 	entity,
+						person,
 						foto,
-						comments_to_foto,
-                        likes_to_person,
-                        likes_to_foto,
-                        likes_to_comments_to_foto;
+						comments,
+                        likes;
 						
-						
+CREATE TABLE entity (
+id 				INT 		NOT NULL auto_increment,
+PRIMARY KEY (id)
+);
+
 CREATE TABLE person (
-id 				INT 			NOT NULL AUTO_INCREMENT,
+id 				INT 			NOT NULL,
 first_name 		VARCHAR(20) 	NOT NULL,
 last_name 		VARCHAR(20) 	NOT NULL,
+FOREIGN KEY (id) REFERENCES entity (id) ON DELETE CASCADE ON UPDATE CASCADE,
 PRIMARY KEY (id)
 );
 
 CREATE TABLE foto (
-id				INT 			NOT NULL AUTO_INCREMENT,
+id 				INT 			NOT NULL,
 id_from_person	INT 			NOT NULL,
+title			VARCHAR(100)	NOT NULL,
 url				VARCHAR(255) 	NOT NULL,
+FOREIGN KEY (id) REFERENCES entity (id) ON DELETE CASCADE ON UPDATE CASCADE,
 FOREIGN KEY (id_from_person) REFERENCES person (id) ON DELETE CASCADE ON UPDATE CASCADE,
 PRIMARY KEY (id)
 );
 
-CREATE TABLE comments_to_foto (
-id					INT 			NOT NULL AUTO_INCREMENT,
-to_foto_id			INT				NOT NULL,
-id_from_person		INT 			NOT NULL,
+CREATE TABLE comments (
+id 					INT 	NOT NULL,
+id_from_person		INT 	NOT NULL,
+id_to_entity		INT 	NOT NULL,
 com_text 			VARCHAR(255),
+PRIMARY KEY (id),
+FOREIGN KEY (id) REFERENCES entity (id) ON DELETE CASCADE ON UPDATE CASCADE,
 FOREIGN KEY (id_from_person) REFERENCES person (id) ON DELETE CASCADE ON UPDATE CASCADE,
-FOREIGN KEY (to_foto_id) REFERENCES foto (id) ON DELETE CASCADE ON UPDATE CASCADE,
-PRIMARY KEY (id)
+FOREIGN KEY (id_to_entity) REFERENCES entity (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE likes_to_person (
-id 					INT 			NOT NULL AUTO_INCREMENT,
-to_person_id		INT				NOT NULL,
-id_from_person 		INT 			NOT NULL,
+CREATE TABLE likes (
+id 					INT 	NOT NULL auto_increment,
+id_from_person 		INT 	NOT NULL,
+id_to_entity		INT 	NOT NULL,
 PRIMARY KEY (id),
-UNIQUE KEY (to_person_id,id_from_person),
-FOREIGN KEY (id_from_person) REFERENCES person (id) ON DELETE CASCADE ON UPDATE CASCADE,
-FOREIGN KEY (to_person_id) REFERENCES person (id) ON DELETE CASCADE ON UPDATE CASCADE
-);
-
-CREATE TABLE likes_to_foto (
-id 					INT 			NOT NULL AUTO_INCREMENT,
-to_foto_id			INT				NOT NULL,
-id_from_person 		INT 			NOT NULL,
-PRIMARY KEY (id),
-UNIQUE KEY (to_foto_id,id_from_person),
-FOREIGN KEY (id_from_person) REFERENCES person (id) ON DELETE CASCADE ON UPDATE CASCADE,
-FOREIGN KEY (to_foto_id) REFERENCES foto (id) ON DELETE CASCADE ON UPDATE CASCADE
-);
-
-CREATE TABLE likes_to_comments_to_foto (
-id 					INT 			NOT NULL AUTO_INCREMENT,
-to_foto_comments_id	INT				NOT NULL,
-id_from_person 		INT 			NOT NULL,
-PRIMARY KEY (id),
-UNIQUE KEY (to_foto_comments_id,id_from_person),
-FOREIGN KEY (id_from_person) REFERENCES person (id) ON DELETE CASCADE ON UPDATE CASCADE,
-FOREIGN KEY (to_foto_comments_id) REFERENCES comments_to_foto (id) ON DELETE CASCADE ON UPDATE CASCADE
+UNIQUE KEY (id_to_entity,id_from_person),
+FOREIGN KEY (id_to_entity) REFERENCES entity (id) ON DELETE CASCADE ON UPDATE CASCADE,
+FOREIGN KEY (id_from_person) REFERENCES person (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 -- creation procedures for like or revoke like
 
-DROP procedure IF EXISTS `like_to_person_from_person_create_delete`;
+DROP procedure IF EXISTS `like_from_person_to_entity_create_delete`;
 
 DELIMITER $$
 USE `social_network`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `like_to_person_from_person_create_delete`(to_person INT,from_person INT)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `like_from_person_to_entity_create_delete`(from_person INT,to_entity INT)
 BEGIN
-if exists(SELECT * FROM likes_to_person WHERE to_person_id = to_person AND id_from_person=from_person) then
-delete FROM likes_to_person WHERE to_person_id = to_person AND id_from_person=from_person;
+if exists(SELECT * FROM likes WHERE id_to_entity = to_entity AND id_from_person=from_person) then
+delete FROM likes WHERE id_to_entity = to_entity AND id_from_person=from_person;
 else
-INSERT INTO likes_to_person VALUES(null,to_person,from_person);
-END IF;
-END$$
-
-DELIMITER ;
-
-DROP procedure IF EXISTS `like_to_foto_from_person_create_delete`;
-
-DELIMITER $$
-USE `social_network`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `like_to_foto_from_person_create_delete`(to_foto INT,from_person INT)
-BEGIN
-if exists(SELECT * FROM likes_to_foto WHERE to_foto_id = to_foto AND id_from_person=from_person) then
-delete FROM likes_to_foto WHERE to_foto_id = to_foto AND id_from_person=from_person;
-else
-INSERT INTO likes_to_foto VALUES(null,to_foto,from_person);
-END IF;
-END$$
-
-DELIMITER ;
-
-DROP procedure IF EXISTS `like_to_comments_to_foto_from_person_create_delete`;
-
-DELIMITER $$
-USE `social_network`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `like_to_comments_to_foto_from_person_create_delete`(to_foto_comments INT,from_person INT)
-BEGIN
-if exists(SELECT * FROM likes_to_comments_to_foto WHERE to_foto_comments_id = to_foto_comments AND id_from_person=from_person) then
-delete FROM likes_to_comments_to_foto WHERE to_foto_comments_id = to_foto_comments AND id_from_person=from_person;
-else
-INSERT INTO likes_to_comments_to_foto VALUES(null,to_foto_comments,from_person);
+INSERT INTO likes VALUES(null,from_person,to_entity);
 END IF;
 END$$
 
