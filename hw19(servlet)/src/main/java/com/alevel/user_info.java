@@ -5,6 +5,7 @@ import entitys.User;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+//@WebServlet("/userinfo")
 public class user_info extends HttpServlet {
     private DBManager<User> dbManager = new DBManager();
     private RequestDispatcher requestDispatcher = null;
@@ -56,7 +58,7 @@ public class user_info extends HttpServlet {
                 "User id: " + user.getId() + "<br>" +
                 "User name: " + user.getName() + "<br>" +
                 "User email: " + user.getEmail() + "<br>" +
-                "User pass: " + user.getPass() + "<br>" +
+                "User passhash: " + user.getPass() + "<br>" +
                 "</body>" +
                 "</html>");
         writer.flush();

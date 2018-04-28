@@ -6,6 +6,7 @@ import entitys.User;
 import javax.sql.rowset.CachedRowSet;
 import java.sql.*;
 
+
 public class DBManager<T> {
     private String url = "jdbc:mysql://localhost:3306/";
     private String db_name = "site";
@@ -22,19 +23,6 @@ public class DBManager<T> {
             e.printStackTrace();
         }
         full_url_to_db = url + db_name + url_sufix;
-    }
-
-    public DBManager(String url, String db_name, String user, String password, boolean sufix) {
-        this.url = url;
-        this.db_name = db_name;
-        this.user = user;
-        this.password = password;
-
-        if (sufix) {
-            full_url_to_db = url + db_name + url_sufix;
-        } else {
-            full_url_to_db = url + db_name;
-        }
     }
 
     private int executeUpdate(String query) {

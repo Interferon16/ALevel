@@ -5,24 +5,11 @@
 <web-app>
     <display-name>Archetype Created Web Application</display-name>
 
-    <servlet>
-        <servlet-name>register</servlet-name>
-        <servlet-class>com.alevel.reg_servlet</servlet-class>
-    </servlet>
-
-    <servlet>
-        <servlet-name>userinfo</servlet-name>
-        <servlet-class>com.alevel.user_info</servlet-class>
-    </servlet>
-
-
-    <servlet-mapping>
-        <servlet-name>register</servlet-name>
-        <url-pattern>/register</url-pattern>
-    </servlet-mapping>
-
-    <servlet-mapping>
-        <servlet-name>userinfo</servlet-name>
-        <url-pattern>/userinfo</url-pattern>
-    </servlet-mapping>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/errors/404.jsp</location>
+    </error-page>
+    <error-page>
+        <location>/errors/other.jsp</location>
+    </error-page>
 </web-app>

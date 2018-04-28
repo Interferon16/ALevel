@@ -1,4 +1,4 @@
-alert("hi");
+//alert("hi");
 var element = document.getElementById("first_image");
 var start_width = element.width;
 var start_height = element.height;

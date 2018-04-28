@@ -1,4 +1,4 @@
-alert("hi");
+//alert("hi");
 var element = document.getElementById("first_image");
 var start_width = element.width;
 var start_height = element.height;
@@ -19,7 +19,7 @@ for (var i = 0; i < head.length; i++) {
     head[i].addEventListener('mouseout', function () {
         this.style.color = '#000000';
     }, false);
-    head[i].addEventListener('onclick',function () {
+    head[i].addEventListener('click',function () {
         content=document.getElementsByClassName(this.id);
         if(content[0].style.display=="none"){
             content.style.display="inline";
