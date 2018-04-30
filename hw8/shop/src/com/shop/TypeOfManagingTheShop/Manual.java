@@ -1,13 +1,13 @@
 package com.shop.TypeOfManagingTheShop;
 
-import com.shop.Shelfs.AppleShelf;
-import com.shop.Shelfs.PenShelf;
 import com.shop.Shelfs.Shelf;
 import com.shop.bag.ATBPacket;
 import com.shop.bag.Bag;
 import com.shop.bag.BagImpl;
 import com.shop.manager.ShopManager;
+import com.shop.position.impl.Apple;
 
+import java.util.Random;
 import java.util.Scanner;
 
 public class Manual {
@@ -17,8 +17,8 @@ public class Manual {
     public static void start() {
         Scanner scanner = new Scanner(System.in);
         Bag bag;
-        appleshelf = new AppleShelf();
-        penshelf = new PenShelf();
+        appleshelf = new Shelf();
+        penshelf = new Shelf();
         System.out.println("S chem poidem vasia?");
         System.out.println("1: ATB power");
         System.out.println("2: Standart edition Galia");
@@ -95,6 +95,7 @@ public class Manual {
 
     private static void zatavarkaPolok(Shelf appleshelf, Shelf penshelf) {
         while (true) {
+            Random rnd = new Random();
             Scanner scanner = new Scanner(System.in);
             System.out.println("Kakie polki budem zatavarivat?");
             System.out.println("1: Polku s karandashami");
@@ -102,12 +103,16 @@ public class Manual {
             System.out.println("3: Vse, ya zakonchil.");
             switch (scanner.nextInt()) {
                 case 1:
-                    penshelf.zatavarka();
-                    //penshelf.showShelf(); //for test
+                    for (int i = 0; i < 90; i++) {
+                        double price = (double)(rnd.nextInt(100)+10) / 10;
+                        penshelf.put(new Apple(price, "Pen"));
+                    }
                     break;
                 case 2:
-                    appleshelf.zatavarka();
-                    //appleshelf.showShelf(); //for test
+                    for (int i = 0; i < 90; i++) {
+                        double price = (double)(rnd.nextInt(100)+10) / 10;
+                        appleshelf.put(new Apple(price, "Apple"));
+                    }
                     break;
                 case 3:
                     return;

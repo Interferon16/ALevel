@@ -9,4 +9,9 @@ public class Apple extends AbstractPosition {
     public Apple(double price, String name) {
         super(price, name);
     }
+
+    @Override
+    public int compareTo(Object o) {
+        return name.compareTo(getName());
+    }
 }

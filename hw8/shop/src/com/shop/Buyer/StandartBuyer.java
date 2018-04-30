@@ -1,14 +1,13 @@
 package com.shop.Buyer;
 
-import com.shop.Shelfs.AppleShelf;
 import com.shop.Shelfs.Shelf;
 import com.shop.bag.ATBPacket;
 import com.shop.bag.Bag;
 import com.shop.bag.BagImpl;
-import com.shop.position.Position;
 
 import java.text.DecimalFormat;
-import java.util.Random;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class StandartBuyer implements Buyer {
 
@@ -24,9 +23,23 @@ public class StandartBuyer implements Buyer {
     private int age;
 
     private Order orderstatus = Order.OPEN;
-    Random rnd = new Random();
+    private Random rnd = new Random();
 
     private Bag bag;
+
+    private static Map<String, Bag> order = new HashMap<>();
+
+    private void addOrderList() {
+        order.put(curStringDate, this.bag);
+    }
+
+    private long curTime = System.currentTimeMillis();
+    private String curStringDate = new SimpleDateFormat("hh:mm:ss").format(curTime);
+
+
+    public String getOrderList() {
+        return order.toString();
+    }
 
     public void chooseBag() {
         switch (rnd.nextInt(2)) {
@@ -43,37 +56,41 @@ public class StandartBuyer implements Buyer {
     }
 
     public boolean buy(Shelf firstshelf, Shelf secondshelf) {
-        int quantity = rnd.nextInt(6)+5;
+        int quantity = rnd.nextInt(6) + 5;
         for (int i = 0; i < quantity; i++) {
-            if(bag.getNotUsedSize()==0){
+            if (bag.getNotUsedSize() == 0) {
                 break;
             }
-            switch(rnd.nextInt(2)) {
+            switch (rnd.nextInt(2)) {
                 case 0:
-                    if(firstshelf.checkAvailable()) {
-                    bag.add(firstshelf.get());
-                }break;
+                    if (firstshelf.checkAvailable()) {
+                        bag.add(firstshelf.get());
+                    }
+                    break;
                 case 1:
-                    if(secondshelf.checkAvailable()) {
-                    bag.add(secondshelf.get());
-                }break;
+                    if (secondshelf.checkAvailable()) {
+                        bag.add(secondshelf.get());
+                    }
+                    break;
             }
-        }return true;
-    }
-
-    public boolean pay(double sum) {
-        if(sum>money){
-            return false;
         }
-        orderstatus = Order.PAID;
-        money-=sum;
+        addOrderList();
         return true;
     }
 
 
+    public boolean pay(double sum) {
+        if (sum > money) {
+            return false;
+        }
+        orderstatus = Order.PAID;
+        money -= sum;
+        return true;
+    }
+
 
     public String seeBuyer() {
-        return " | Имя: " + name + " | Возраст " + age + " | Количестов денег: " + formatmoney.format(money)+" | Статус заказа:"+getOrderStatus();
+        return " | Имя: " + name + " | Возраст " + age + " | Количестов денег: " + formatmoney.format(money) + " | Статус заказа:" + getOrderStatus();
     }
 
     public Order getOrderStatus() {

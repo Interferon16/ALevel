@@ -1,8 +1,0 @@
-com\alevel\jsp_user_info.class
-com\alevel\user_info.class
-entitys\Entity.class
-com\alevel\reg_servlet.class
-filters\ScanAllMoving.class
-DBManaging\DBManager.class
-entitys\User.class
-filters\User_info_filter.class

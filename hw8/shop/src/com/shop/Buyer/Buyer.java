@@ -2,7 +2,6 @@ package com.shop.Buyer;
 
 import com.shop.Shelfs.Shelf;
 import com.shop.bag.Bag;
-import com.shop.position.Position;
 
 public interface Buyer {
 
@@ -13,6 +12,8 @@ public interface Buyer {
     boolean pay(double sum);
 
     String seeBuyer();
+
+    public String getOrderList();
 
     Order getOrderStatus();
 

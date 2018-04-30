@@ -4,18 +4,20 @@ import com.shop.util.BagManager;
 import com.shop.position.Position;
 import com.shop.position.impl.abst.AbstractPosition;
 
+import java.util.ArrayList;
+
 /**
  * Created by cube on 21.02.2018.
  */
 public class BagImpl implements Bag {
     public BagImpl(){
         SIZE = 10;
-        positions = new Position[SIZE];
+        positions = new ArrayList<>(SIZE);
     }
 
     private int SIZE;
 
-    private Position[] positions;
+    private ArrayList<AbstractPosition> positions;
 
     private int realIndex = 0;
 
@@ -27,15 +29,15 @@ public class BagImpl implements Bag {
     }
 
     public void add(AbstractPosition position) {
-        positions[realIndex++] = position;
+        positions.add(realIndex++,position);
     }
 
     public boolean haveNext() {
-        return iteratorIndex < realIndex;
+        return iteratorIndex < positions.size();
     }
 
     public Position next() {
-        return positions[iteratorIndex++];
+        return positions.get(iteratorIndex++);
     }
 
     public void initIterator() {
@@ -43,15 +45,15 @@ public class BagImpl implements Bag {
     }
 
     public void sortByPrice(){
-        BagManager.sortByPrice(this.positions,realIndex);
+        BagManager.sortByPrice(this.positions);
     }
 
     public Position get() {
         if (realIndex<0) {
             return null;
         }
-        Position temp = positions[iteratorIndex];
-        positions[iteratorIndex++] = null;
+        Position temp = positions.get(iteratorIndex);
+        positions.remove(iteratorIndex);
         return temp;
     }
 }

@@ -14,9 +14,9 @@ public class ShopManager {
     public double sum(Bag bag) throws InterruptedException {
         double sum = 0;
         bag.initIterator();
-        while (bag.haveNext()){
+        while (bag.haveNext()) {
             System.out.println("PICK!!");
-            sum +=bag.next().getPrice();
+            sum += bag.next().getPrice();
             Thread.sleep(10);
         }
         System.out.println("Ваша сумма составляет " + sum);
@@ -25,33 +25,37 @@ public class ShopManager {
 
     public double sum(Bag bag, String action) throws InterruptedException {
         double sum;
-        switch(action) {
+        switch (action) {
             case "threeForTwo":
-                sum=threeForTwo(bag);break;
-            default: sum=sum(bag);break;
-        }return sum;
+                sum = threeForTwo(bag);
+                break;
+            default:
+                sum = sum(bag);
+                break;
+        }
+        return sum;
     }
 
     private double threeForTwo(Bag bag) throws InterruptedException {
         double sum = 0;
         bag.initIterator();
-        int count=0, freePossitions=0;
-        while (bag.haveNext()){
-            Position a=bag.next();
-            System.out.println("PICK!! - "+a.getName()+" "+a.getPrice());
-            sum +=a.getPrice();
+        int count = 0, freePossitions = 0;
+        while (bag.haveNext()) {
+            Position a = bag.next();
+            System.out.println("PICK!! - " + a.getName() + " " + a.getPrice());
+            sum += a.getPrice();
             Thread.sleep(10);
             count++;
         }
         bag.sortByPrice();
-        freePossitions=count/3;
-        count=0;
+        freePossitions = count / 3;
+        count = 0;
         bag.initIterator();
-        while(freePossitions>count){
-            sum -=bag.next().getPrice();
+        while (freePossitions > count) {
+            sum -= bag.next().getPrice();
             count++;
         }
-        System.out.println("Ваша сумма составляет " + formatmoney.format(sum)+" по акции Вам предоставленны "+freePossitions+" товаров бесплатно.");
+        System.out.println("Ваша сумма составляет " + formatmoney.format(sum) + " по акции Вам предоставленны " + freePossitions + " товаров бесплатно.");
         return sum;
     }
 }

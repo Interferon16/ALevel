@@ -2,6 +2,10 @@ package com.shop;
 
 import com.shop.TypeOfManagingTheShop.Automatic;
 import com.shop.TypeOfManagingTheShop.Manual;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Scanner;
 
 /**
