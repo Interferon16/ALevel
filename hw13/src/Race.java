@@ -29,5 +29,8 @@ public class Race {
         for(Thread h: HorseRace){
             h.start();
         }
+        for(Thread h: HorseRace){
+            h.join();
+        }
     }
 }

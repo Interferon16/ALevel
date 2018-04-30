@@ -1,6 +1,4 @@
-import Airplanes.Aircraft;
 import Airplanes.AutonomusMilitaryAircraft;
-import Airplanes.MilitaryAircraft;
 
 import java.io.*;
 import java.util.ArrayList;
