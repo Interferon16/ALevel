@@ -4,10 +4,14 @@ import java.io.*;
 import java.util.Date;
 
 public class FileTree {
+
     public FileTree(String path, String list_of_files) throws IOException {
         createListOfFiles(list_of_files);
         browseFileTreeModifiead(path, -1);
         writeToFile(list_of_files_buffer);
+        long finish_time = System.currentTimeMillis();
+        System.out.println("Total estimeted time - "+(finish_time-star_time)+"ms");
+        System.out.println("Total strings - "+line_count);
     }
 
     public FileTree(String path) throws IOException {
@@ -16,6 +20,8 @@ public class FileTree {
 
     private File list_of_files;
     private StringBuffer list_of_files_buffer = new StringBuffer();
+    private final long star_time = System.currentTimeMillis();
+    private int line_count=0;
 
     private void createListOfFiles(String list_of_files_dir) throws IOException {
         String list_of_files_path = list_of_files_dir + "\\ListOfFiles.txt";
@@ -45,10 +51,14 @@ public class FileTree {
                 if (s.isDirectory()) {
                     prefix = "[DIR] ";
                 }
-                list_of_files_buffer.append("\r\n" + white_space + prefix + "" + s.getName() + " :    " + last_modified);
-                if (list_of_files_buffer.length() > 160000) {
+                String filedetails = ("\r\n" + white_space + prefix + "" + s.getName() + " :    " + last_modified);
+                list_of_files_buffer.append(filedetails);
+                if (list_of_files_buffer.length() > 5000) {
                     writeToFile(list_of_files_buffer);
+                    line_count+=list_of_files_buffer.length();
+                    System.out.println("upload - "+list_of_files_buffer.length()+" of strings, in time"+(star_time-System.currentTimeMillis())+"ms");
                     list_of_files_buffer.delete(0, list_of_files_buffer.length());
+
                 }
                 browseFileTreeModifiead(s.getPath(), white_space_count);
 
