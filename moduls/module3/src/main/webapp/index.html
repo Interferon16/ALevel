@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="css/excel.css">
+</head>
+<body>
+<form>
+    <table>
+        <tr>
+            <td><button type="button" onclick="sendJSonToDB()">Save to DB</button></td>
+            <td><button type="button">Load from DB</button></td>
+            <td><input name="table_name" placeholder="Enter DB name"></td>
+        </tr>
+    </table>
+</form>
+    <table>
+        <tr>
+            <td>formula: </td>
+            <td style="width: 600px;border: 1px solid darkgrey" class="formulafield">
+            </td>
+        </tr>
+    </table>
+    <table class="table" cellspacing="0" border="0" id="maintable">
+        <tr class="headrow" id="row-0">
+            <td class="headcell" id="head-0"></td>
+            <td class="headcell" id="head-1">A<button class="clickbutton" onclick="addColumn(this.parentNode.id)" title="Добавить столбец справа" type="button">+</button><button class="clickbutton" onclick="delThisColumn(this.parentNode.id)" title="Удалить текущий столбец" type="button" >-</button></td>
+        </tr>
+        <tr class="row" id="row-1">
+            <td class="headcell" id="1">1<button class="clickbutton" onclick="addDownRow(this.parentNode.id)" title="Добавить строку визу" type="button">+</button><button class="clickbutton" onclick="delThisRow(this.parentNode.id)" title="Удалить текущую строку" type="button" >-</button></td>
+            <td class="cell" id="a1"  ondblclick="openInsert(this.id)" onclick="focusAndGetFormula(this.id)"></td>
+        </tr>
+    </table>
+<script src="scripts/excel.js" ></script>
+</body>
+</html>

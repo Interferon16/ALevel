@@ -1,0 +1,40 @@
+
+
+.headcell{
+    border: 1px solid darkgray;
+    width: 70px;
+    height: 20px;
+    text-align: center;
+    background-color: lightgray;
+    mso-cellspacing: 1px;
+    font-weight: bold;
+    min-width: 70px;
+}
+
+.cell{
+    border: 1px solid darkgray;
+    width: 70px;
+    height: 20px;
+    text-align: center;
+    font-family:Tahoma, sans-serif;
+    font-size:13px;
+    min-width: 70px;
+}
+
+.activecell{
+    border: 2px solid green;
+    width: 68px;
+    height: 18px;
+    text-align: center;
+    font-family:Tahoma, sans-serif;
+    font-size:13px;
+}
+
+.cell:focus {
+    border: 2px solid darkblue;
+}
+
+.clickbutton{
+    text-align: center;
+    font-weight: bold;
+}
