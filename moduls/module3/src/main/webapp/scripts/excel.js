@@ -105,8 +105,8 @@ function addDownRow(cellid) {
     var parent_table =  parent_row.parentNode.parentNode;
     var new_row = document.createElement("tr");
     var new_row_num = Number((parent_row.id.split("-"))[1])+1;
-    new_row.setAttribute("class",parent_row.getAttribute("class"));
-    new_row.setAttribute("id",("row-"+new_row_num));
+/*    new_row.setAttribute("class",parent_row.getAttribute("class"));
+    new_row.setAttribute("id",("row-"+new_row_num));*/
     var cell_numbers = parent_row.cells.length;
     for(var i=0;i<cell_numbers;i++){
         var old_cell=parent_row.cells[i];
@@ -143,6 +143,8 @@ function refreshRowId(table,parent_row) {
     var row_number = parent_row.sectionRowIndex;
     for(var i=row_number;i<table.rows.length;i++){
         var current_row = table.rows[i];
+        current_row.setAttribute("class","row");
+        current_row.setAttribute("id",("row-"+current_row.rowIndex));
         for(var j=0;j<current_row.cells.length;j++){
             var current_row_number = current_row.sectionRowIndex;
             var current_cell = current_row.cells[j];
@@ -253,22 +255,19 @@ function refreshColumnHead(head_row) {
         var minus_button = createButton("-","Удалить текущий столбец");
         plus_button.setAttribute("onclick","addColumn(this.parentNode.id)");
         minus_button.setAttribute("onclick","delThisColumn(this.parentNode.id)");
-        head_row.cells[i].appendChild(plus_button);
-        head_row.cells[i].appendChild(minus_button);
+        var current_row=head_row.cells[i];
+        current_row.appendChild(plus_button);
+        current_row.appendChild(minus_button);
+        current_row.setAttribute("id","head-"+current_row.cellIndex);
     }
 }
 
 function sendJSonToDB() {
     var curent_table=document.getElementById("maintable");
-    var count=0;
     var array_of_cells = {};
-    var head={};
     var table_width=curent_table.rows[0].cells.length-1;
     var table_height=curent_table.rows.length-1;
-    head["id"]="head";
-    head["data_formula"]="table_size";
-    head["value"]=table_width+"x"+table_height;
-    array_of_cells[++count]=head;
+    var count=0;
     //alert(table_width+"+"+table_height);
     for(var i=1;i<table_height+1;i++){
         var current_row=curent_table.rows[i];
@@ -285,7 +284,8 @@ function sendJSonToDB() {
     }
     var json = JSON.stringify(array_of_cells);
     var xhr = new XMLHttpRequest();
-    xhr.open('post',"/exceladd");
+    xhr.onreadystatechange
+    xhr.open('post',"/exceladd",true);
     xhr.send(json);
-    //alert(json);
+    console.log(json);
 }
