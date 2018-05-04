@@ -6,15 +6,13 @@
     <link rel="stylesheet" href="css/excel.css">
 </head>
 <body>
-<form>
     <table>
         <tr>
             <td><button type="button" onclick="sendJSonToDB()">Save to DB</button></td>
             <td><button type="button">Load from DB</button></td>
-            <td><input name="table_name" placeholder="Enter DB name"></td>
+            <td class="tablename" id="tablename" ondblclick="openInsert(this.id)"></td>
         </tr>
     </table>
-</form>
     <table>
         <tr>
             <td>formula: </td>
