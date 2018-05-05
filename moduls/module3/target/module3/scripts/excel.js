@@ -12,8 +12,13 @@ function openInsert(element_id) {
     newInput.setAttribute("class", tempClass);
     newInput.setAttribute("id", tempId);
     newInput.setAttribute("value", tempValue);
-    newInput.setAttribute("onblur", "getBlur(this.id)");
-    newInput.setAttribute("onkeyup", "tapEnter(event,this.id)");
+    if(tempClass==="cell"||tempClass==="activecell"){
+        newInput.setAttribute("onblur", "getBlur(this.id,true)");
+        newInput.setAttribute("onkeyup", "tapEnter(event,this.id,true)");
+    }else{
+        newInput.setAttribute("onblur", "getBlur(this.id)");
+        newInput.setAttribute("onkeyup", "tapEnter(event,this.id)");
+    }
     newInput.setAttribute("style", "width: " + temp_width + "px; height: " + temp_height + "px");
     cell.parentNode.insertBefore(newInput, cell);
     cell.parentNode.removeChild(cell);
@@ -38,13 +43,12 @@ function closeInsert(element_id) {
     }
     newCell.setAttribute("data-formula", tempValue);
     newCell.setAttribute("ondblclick", "openInsert(this.id)");
-    newCell.setAttribute("onclick", "focusAndGetFormula(this.id)");
+    if(tempClass==="cell"||tempClass==="activecell") {
+        newCell.setAttribute("onclick", "focusAndGetFormula(this.id,true)");
+    }
     cell.parentNode.insertBefore(newCell, cell);
     cell.parentNode.removeChild(cell);
-    //setDependentCell(tempValue, cell.id);
-
 }
-
 
 function parceEquation(equatin) {
     if (equatin.charAt(0) === "=") {
@@ -76,25 +80,6 @@ function replaceByCellId(match) {
     a = a == "" ? 0 : a;
     return a;
 }
-
-/*
-function setDependentCell(equation, parrent_id) {
-    var cellname = /([a-zа-яё]+\d+)/gi;
-    var dependencies = equation.match(cellname);
-        for (var i = 0; i < dependencies.length; i++) {
-            element = document.getElementById(dependencies[i]);
-            var temp_dep=[];
-            if(element.getAttribute("data-references")==null){
-                temp_dep=[];
-            }else{
-                temp_dep.push(element.getAttribute("data-references"))
-            }
-            temp_dep.push(parrent_id);
-            element.setAttribute("data-references", temp_dep);
-        }
-
-}
-*/
 
 function addDownRow(cellid) {
     var cell = document.getElementById(cellid);
@@ -156,17 +141,20 @@ function refreshRowId(table, parent_row) {
     }
 }
 
-function getBlur(element_id) {
+function getBlur(element_id, withFormula) {
     closeInsert(element_id);
-    getFormula(element_id);
+    if(!!withFormula){
+        getFormula(element_id);
+    }
 }
 
-function tapEnter(key, element_id) {
-    if (key.keyCode == 13) {
+function tapEnter(key, element_id, withFormula) {
+    if (key.keyCode === 13) {
         document.getElementById(element_id).removeAttribute("onblur");
         closeInsert(element_id);
-        getFormula(element_id);
-
+        if(!!withFormula){
+            getFormula(element_id);
+        }
     }
 }
 
@@ -255,6 +243,17 @@ function sendJSonToDB() {
     var table_width = curent_table.rows[0].cells.length - 1;
     var table_height = curent_table.rows.length - 1;
     var count = 0;
+    var head = {};
+    var table_name = document.getElementById("tablename").innerText;
+    if(table_name===""){
+        table_name="default_table";
+        document.getElementById("tablename").innerText="default_table";
+        document.getElementById("tablename").setAttribute("data-formula","default_table");
+    }
+    head["id"]="head";
+    head["data_formula"]=table_name;
+    head["value"]=table_width+"x"+table_height;
+    array_of_cells[++count]=head;
     for (var i = 1; i < table_height + 1; i++) {
         var current_row = curent_table.rows[i];
         for (var j = 1; j < table_width + 1; j++) {
@@ -273,5 +272,89 @@ function sendJSonToDB() {
     xhr.open('post', "/exceladd", true);
     xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
     xhr.send(json);
-    console.log(json);
+    //console.log(json);
 }
+
+function createTable(table_width,table_height) {
+    document.getElementById("createtable").setAttribute("style","display: none");
+    if(table_width===0){
+        table_width=document.getElementById("tablesizefieldwidth").innerText;
+    }
+    if(table_height===0){
+        table_height=document.getElementById("tablesizefieldheight").innerText;
+    }
+    document.getElementById("tablesizefieldwidth").setAttribute("style","display: none");
+    document.getElementById("tablesizefieldheight").setAttribute("style","display: none");
+    document.getElementById("tablesizefielddelimiter").setAttribute("style","display: none");
+    document.getElementById("savetable").setAttribute("style","display: inline");
+    document.getElementById("tablebody").setAttribute("style","display: inline");
+    var table_name = document.getElementById("tablename").innerText;
+    if(table_name===""){
+        table_name="default_table";
+        document.getElementById("tablename").innerText="default_table";
+        document.getElementById("tablename").setAttribute("data-formula","default_table");
+    }
+    console.log(table_width+""+table_height);
+    for(var j=1;j<table_height;j++){
+        addDownRow(j);
+    }
+    for(var i=1;i<table_width;i++){
+        addColumn("head-"+(i));
+    }
+}
+
+function deleteTable() {
+    var main_table=document.getElementById("maintable");
+    var row_num=main_table.rows.length-1;
+    var col_num=main_table.rows[0].cells.length-1;
+    console.log(row_num+" rncn "+col_num);
+    for(var i=row_num;i>1;i--){
+        delThisRow(i-1);
+    }
+    for(var j=col_num;j>1;j--){
+        delThisColumn("head-"+j);
+    }
+}
+
+function getTableFromDB() {
+    var table_width;
+    var table_height;
+    var table_name = document.getElementById("tablename").innerText;
+    ajax_get("/exceladd?table_name="+table_name,function (json) {
+        for(var i in json){
+            var cell=json[i];
+            if(i==="1"){
+                table_width=cell["value"].split("x")[0];
+                table_height=cell["value"].split("x")[1];
+                deleteTable();
+                createTable(table_width,table_height);
+            }else{
+                var tocell = document.getElementById(cell["id"]);
+                tocell.setAttribute("data-formula",cell["data_formula"]);
+                tocell.innerText=cell["value"];
+            }
+
+        }
+
+    });
+}
+
+function ajax_get(url, callback) {
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            console.log('responseText:' + xhr.responseText);
+            try {
+                var json = JSON.parse(xhr.responseText);
+            } catch(err) {
+                console.log(err.message + " in " + xhr.responseText);
+                return;
+            }
+            callback(json);
+        }
+    };
+
+    xhr.open("GET", url, true);
+    xhr.send();
+}
+

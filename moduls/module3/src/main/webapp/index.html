@@ -8,15 +8,21 @@
 <body>
     <table>
         <tr>
-            <td><button type="button" onclick="sendJSonToDB()">Save to DB</button></td>
-            <td><button type="button">Load from DB</button></td>
-            <td class="tablename" id="tablename" ondblclick="openInsert(this.id)"></td>
+            <td><button id="createtable" type="button" onclick="createTable(0,0)">Create Table</button></td>
+            <td class="tablesizefield" id="tablesizefieldwidth" ondblclick="openInsert(this.id)"></td>
+            <td class="tablesizefielddelimiter" id="tablesizefielddelimiter">X</td>
+            <td class="tablesizefield" id="tablesizefieldheight" ondblclick="openInsert(this.id)"></td>
+            <td><button id="savetable" type="button" onclick="sendJSonToDB()" style="display: none">Save to DB</button></td>
+            <td><button id="loadtable" type="button" onclick="getTableFromDB()">Load from DB</button></td>
+            <td class="tablename" id="tablename" ondblclick="openInsert(this.id)">Set table name</td>
+            <td class="messagecell" id="messagecell"></td>
         </tr>
     </table>
+    <div style="display: none" id="tablebody">
     <table>
         <tr>
             <td>formula: </td>
-            <td style="width: 600px;border: 1px solid darkgrey" class="formulafield">
+            <td class="formulafield">
             </td>
         </tr>
     </table>
@@ -30,6 +36,7 @@
             <td class="cell" id="a1"  ondblclick="openInsert(this.id)" onclick="focusAndGetFormula(this.id)"></td>
         </tr>
     </table>
+    </div>
 <script src="scripts/excel.js" ></script>
 </body>
 </html>

@@ -1,4 +1,25 @@
+.formulafield{
+    width: 400px;
+    border: 1px solid darkgrey;
+    font-family:Tahoma, sans-serif;
+    font-size:13px;
+}
 
+.tablesizefield{
+    border: 1px solid darkgray;
+    width: 30px;
+    height: 20px;
+    text-align: center;
+}
+
+.tablesizefielddelimiter{
+    border: 1px solid darkgray;
+    width: 10px;
+    height: 20px;
+    background-color: lightgray;
+    text-align: center;
+    font-weight: bold;
+}
 
 .headcell{
     border: 1px solid darkgray;
